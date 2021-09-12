@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////				
 					
-//					require('dotenv').config();
+					require('dotenv').config();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -45,7 +45,7 @@ const mail = (destination, code) => {
         html: `
         <h2>👋 GREETINGS FROM VA-ZEER (BOT)</h2><br>
         <h3>TO VARIFY THAT YOU ARE FROM GEC WAYANAD TYPE</h3>
-        <br><b style="background-color: green; color: yellow;"><h1>/got_code ${code}</h1><b><br>
+        <br><b style="color: red; text-decoration: underline;"><h1>/got_code ${code}</h1><b><br>
         <h3>IN ANY OF THE CHANNELS OF TINKERHUB GECW'S DISCORD SERVER.<h3>`
     };
 	
@@ -98,6 +98,8 @@ client.on('interactionCreate', async interaction => {
 
 	const { commandName } = interaction;
 
+	console.log('INCOMING COMMAND: ' + commandName)
+
 	switch (commandName){
 		case 'verify':
 			let verifier_id = interaction.user.id;
@@ -106,6 +108,7 @@ client.on('interactionCreate', async interaction => {
 				await interaction.deferReply();
 				let code = Math.floor((Math.random() * 9990) + 1010).toString();
 				CODES[verifier_id] = code;
+				console.log(code)
 				mail(mailId, code).then(r => {
 					interaction.editReply({ 
 						content: r, 
@@ -126,10 +129,13 @@ ${mailId} doesn't looks like so...`,
 				});
 			};
 			break;
+
 		case 'got_code':
 			let user_id = interaction.user.id;
 			let code = interaction.options._hoistedOptions[0].value;
 			if (CODES[user_id] == code){
+				let GECWIAN_ROLE = interaction.guild.roles.cache.find(r => r.id === gecwydian);
+				interaction.member.roles.add(GECWIAN_ROLE);
 				interaction.reply({ 
 					content:
 `🎊🎉🎉🎊
@@ -138,8 +144,6 @@ WELCOME TO
 GECWIAN CLUB`, 
 					ephemeral: true 
 				});
-				let GECWIAN_ROLE = interaction.guild.roles.cache.find(r => r.id === gecwydian);
-				interaction.member.roles.add(GECWIAN_ROLE);
 			} else {
 				interaction.reply({ 
 					content: 
@@ -149,13 +153,11 @@ CONSIDER RETYPING.`,
 					ephemeral: true 
 				});
 			};
+
 		default:
 			break;
 	};
 });
-
-
-/////////      	/verify e-mail:ashfaque_18m103me@gecwyd.ac.in 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -169,8 +171,9 @@ client.login(process.env.token);
 
 app.get('/', (req, res) => {
 	res.send(`
-	SERVER IS LISTENING
-	CODES: ${CODES}
-	BYE`);
+	SERVER IS LISTENING \n
+	USERS: ${Object.keys(CODES)} \n
+	CODES: ${Object.values(CODES)} \n
+	`);
 });
 app.listen(3000, console.log('LISTENING @3000'))
