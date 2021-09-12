@@ -104,7 +104,7 @@ client.on('interactionCreate', async interaction => {
 		case 'verify':
 			let verifier_id = interaction.user.id;
 			let mailId = interaction.options._hoistedOptions[0].value;
-			if (mailId.endsWith('@gecwyd.ac.in')){
+			if (mailId.endsWith('@gecwyd.ac.in') && (mailId.length > 15)){
 				await interaction.deferReply();
 				let code = Math.floor((Math.random() * 9990) + 1010).toString();
 				CODES[verifier_id] = code;
