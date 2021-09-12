@@ -14,6 +14,9 @@ const gecwydian = process.env.gecwydian;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+const express = require('express');
+const app = express();
+
 const { Client, Intents, MessageActionRow, MessageButton, MessageEmbed, MessageSelectMenu } = require('discord.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
@@ -164,3 +167,10 @@ client.login(process.env.token);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+app.get('/', (req, res) => {
+	res.send(`
+	SERVER IS LISTENING
+	CODES: ${CODES}
+	BYE`);
+});
+app.listen(3000, console.log('LISTENING @3000'))
