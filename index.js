@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////				
 					
-					require('dotenv').config();
+//	require('dotenv').config();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -20,12 +20,12 @@ const app = express();
 const { Client, Intents, MessageActionRow, MessageButton, MessageEmbed, MessageSelectMenu } = require('discord.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
+const { SlashCommandBuilder, bold, italic, strikethrough, underscore, spoiler, quote, blockQuote  } = require('@discordjs/builders');
+
 const { REST } = require('@discordjs/rest');
 const rest = new REST({ version: '9' }).setToken(token);
 
 const { Routes } = require('discord-api-types/v9');
-
-const { SlashCommandBuilder, bold, italic, strikethrough, underscore, spoiler, quote, blockQuote  } = require('@discordjs/builders');
 
 const nodemailer = require("nodemailer");
 const transporter = nodemailer.createTransport({ service: 'gmail', auth: { user: mail_id, pass: pass } });
@@ -98,7 +98,7 @@ client.on('interactionCreate', async interaction => {
 
 	const { commandName } = interaction;
 
-	console.log('INCOMING COMMAND: ' + commandName)
+	console.log('INCOMING COMMAND: ' + commandName);
 
 	switch (commandName){
 		case 'verify':
@@ -176,4 +176,4 @@ app.get('/', (req, res) => {
 	CODES: ${Object.values(CODES)} \n
 	`);
 });
-app.listen(3000, console.log('LISTENING @3000'))
+app.listen(3000, console.log('LISTENING @3000'));
