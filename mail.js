@@ -1,5 +1,4 @@
 ////////////////////////////////////////
-require('dotenv').config();
 
 const mail_id = process.env.mail;
 const pass = process.env.pass;
