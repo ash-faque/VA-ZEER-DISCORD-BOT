@@ -1,4 +1,4 @@
-require('dotenv').config();
+////////////////////////////////////////////////
 
 const token = process.env.token;
 const clientId = process.env.clientId;
